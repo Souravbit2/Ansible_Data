@@ -1,0 +1,11 @@
+---
+- hosts: my_servers
+  become: true  # Need root privileges to check package info
+  tasks:
+  - name: Get package list on {{ ansible_hostname }}
+    package:
+      name: "*"  # Check all packages
+      state: list
+    register: package_info 
+  - debug:
+      msg: "Server {{ ansible_hostname }} has following packages: {{ package_info.results }}"
